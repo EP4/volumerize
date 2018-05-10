@@ -14,7 +14,7 @@ cat > ${VOLUMERIZE_SCRIPT_DIR}/backup <<_EOF_
 set -o errexit
 
 if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
-  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_$(date +"%H:%M_%d-%m-%Y").sql.gz
+  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_\$(date +"%H:%M_%d-%m-%Y").sql.gz
 fi
 
 source ${VOLUMERIZE_SCRIPT_DIR}/stopContainers
@@ -22,6 +22,7 @@ ${DUPLICITY_COMMAND} ${PARAMETER_PROXY} ${DUPLICITY_OPTIONS} ${VOLUMERIZE_INCUDE
 source ${VOLUMERIZE_SCRIPT_DIR}/startContainers
 
 rm -rf ${VOLUMERIZE_SOURCE}/mysqldump/db_*
+
 _EOF_
 
 cat > ${VOLUMERIZE_SCRIPT_DIR}/backupIncremental <<_EOF_
@@ -30,7 +31,7 @@ cat > ${VOLUMERIZE_SCRIPT_DIR}/backupIncremental <<_EOF_
 set -o errexit
 
 if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
-  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_$(date +"%H:%M_%d-%m-%Y").sql.gz
+  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_\$(date +"%H:%M_%d-%m-%Y").sql.gz
 fi
 
 source ${VOLUMERIZE_SCRIPT_DIR}/stopContainers
@@ -46,7 +47,7 @@ cat > ${VOLUMERIZE_SCRIPT_DIR}/backupFull <<_EOF_
 set -o errexit
 
 if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
-  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_$(date +"%H:%M_%d-%m-%Y").sql.gz
+  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_\$(date +"%H:%M_%d-%m-%Y").sql.gz
 fi
 
 source ${VOLUMERIZE_SCRIPT_DIR}/stopContainers
