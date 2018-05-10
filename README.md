@@ -131,6 +131,27 @@ $ docker run -d \
 
 > Will run Volumerize on the common parent folder `/source`.
 
+# Backup MySQL databases
+
+~~~~
+$ docker run -d \
+    --name volumerize \
+    -v application_data:/source/application_data:ro \
+    -v application_database_data:/source/application_database_data:ro \
+    -v application_configuration:/source/application_configuration:ro \
+    -v backup_volume:/backup \
+    -v cache_volume:/volumerize-cache \
+    -e "VOLUMERIZE_SOURCE=/source" \
+    -e "VOLUMERIZE_TARGET=file:///backup" \
+    -e "VOLUMERIZE_MYSQL_BACKUPS=true" \
+    -e "VOLUMERIZE_MYSQL_HOST=127.0.0.1" \
+    -e "VOLUMERIZE_MYSQL_USER=root" \
+    -e "VOLUMERIZE_MYSQL_PASSWORD=passw0rd" \
+    blacklabelops/volumerize
+~~~~
+
+> Will run Volumerize on the common parent folder `/source`.
+
 # Backup Restore
 
 A restore is simple. First stop your Volumerize container and start a another container with the same

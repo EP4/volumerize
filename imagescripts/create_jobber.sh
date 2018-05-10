@@ -13,9 +13,15 @@ cat > ${JOBBER_SCRIPT_DIR}/periodicBackup <<_EOF_
 
 set -o errexit
 
+if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
+  mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysqldump/db_$(date +"%H:%M_%d-%m-%Y").sql.gz
+fi
+
 source ${VOLUMERIZE_SCRIPT_DIR}/stopContainers
 ${DUPLICITY_COMMAND} ${JOBBER_PARAMETER_PROXY} ${DUPLICITY_MODE} ${DUPLICITY_OPTIONS} ${VOLUMERIZE_INCUDES} ${VOLUMERIZE_SOURCE} ${VOLUMERIZE_TARGET}
 source ${VOLUMERIZE_SCRIPT_DIR}/startContainers
+
+rm -rf ${VOLUMERIZE_SOURCE}/mysqldump_*
 _EOF_
 
 JOBBER_CRON_SCHEDULE='0 0 4 * * *'

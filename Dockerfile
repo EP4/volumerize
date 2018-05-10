@@ -21,7 +21,8 @@ RUN apk upgrade --update && \
       musl-dev \
       rsync \
       lftp \
-      py-pip && \
+      py-pip \
+      mysql-client && \
     # Install Duplicity
     if  [ "${DUPLICITY_VERSION}" = "latest" ]; \
       then apk add duplicity ; \
