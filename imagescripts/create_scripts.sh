@@ -65,6 +65,12 @@ set -o errexit
 source ${VOLUMERIZE_SCRIPT_DIR}/stopContainers
 ${DUPLICITY_COMMAND} restore --force ${PARAMETER_PROXY} ${DUPLICITY_OPTIONS} ${VOLUMERIZE_INCUDES} ${VOLUMERIZE_TARGET} ${VOLUMERIZE_SOURCE}
 source ${VOLUMERIZE_SCRIPT_DIR}/startContainers
+
+if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
+  tar -xzOf ${VOLUMERIZE_TARGET}/mysqldump/\$(ls -dt ${VOLUMERIZE_TARGET}/mysqldump/db_* | head -1) | mysql -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD}
+  #rm -rf ${VOLUMERIZE_TARGET}/mysqldump/db_*
+fi
+
 _EOF_
 
 cat > ${VOLUMERIZE_SCRIPT_DIR}/verify <<_EOF_
