@@ -67,8 +67,8 @@ ${DUPLICITY_COMMAND} restore --force ${PARAMETER_PROXY} ${DUPLICITY_OPTIONS} ${V
 source ${VOLUMERIZE_SCRIPT_DIR}/startContainers
 
 if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
-  tar -xzOf ${VOLUMERIZE_SOURCE}/mysqldump/\$(ls -dt ${VOLUMERIZE_SOURCE}/mysqldump/db_* | head -1) | mysql -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD}
-  #rm -rf ${VOLUMERIZE_SOURCE}/mysqldump/db_*
+  gunzip < \$(ls -dt ${VOLUMERIZE_SOURCE}/mysqldump/db_* | head -1) | mysql -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD}
+  rm -rf ${VOLUMERIZE_SOURCE}/mysqldump/db_*
 fi
 
 _EOF_
