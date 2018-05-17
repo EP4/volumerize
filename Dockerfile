@@ -23,7 +23,7 @@ RUN apk upgrade --update && \
       lftp \
       py-pip \
       mysql-client \
-      && libtimedate-perl \
+      libtimedate-perl && \
     # Install Duplicity
     if  [ "${DUPLICITY_VERSION}" = "latest" ]; \
       then apk add duplicity ; \
