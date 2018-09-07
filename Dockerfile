@@ -30,26 +30,30 @@ RUN apk upgrade --update && \
     fi && \
     pip install --upgrade pip && \
     pip install \
+      fasteners \
       PyDrive \
+      chardet \
       azure-storage \
       boto \
       lockfile \
-      mediafire \
       paramiko \
       pycryptopp \
       python-keystoneclient \
       python-swiftclient \
-      requests \
+      requests==2.14.2 \
       requests_oauthlib \
       urllib3 \
+      b2 \
       dropbox==6.9.0 && \
     mkdir -p /etc/volumerize /volumerize-cache /opt/volumerize && \
     touch /etc/volumerize/remove-all-inc-of-but-n-full /etc/volumerize/remove-all-but-n-full /etc/volumerize/startContainers /etc/volumerize/stopContainers \
       /etc/volumerize/backup /etc/volumerize/backupIncremental /etc/volumerize/backupFull /etc/volumerize/restore \
-      /etc/volumerize/periodicBackup /etc/volumerize/verify /etc/volumerize/cleanup /etc/volumerize/remove-older-than /etc/volumerize/cleanCacheLocks && \
+      /etc/volumerize/periodicBackup /etc/volumerize/verify /etc/volumerize/cleanup /etc/volumerize/remove-older-than /etc/volumerize/cleanCacheLocks \
+      /etc/volumerize/prepoststrategy /etc/volumerize/list && \
     chmod +x /etc/volumerize/remove-all-inc-of-but-n-full /etc/volumerize/remove-all-but-n-full /etc/volumerize/startContainers /etc/volumerize/stopContainers \
       /etc/volumerize/backup /etc/volumerize/backupIncremental /etc/volumerize/backupFull /etc/volumerize/restore \
-      /etc/volumerize/periodicBackup /etc/volumerize/verify /etc/volumerize/cleanup /etc/volumerize/remove-older-than /etc/volumerize/cleanCacheLocks && \
+      /etc/volumerize/periodicBackup /etc/volumerize/verify /etc/volumerize/cleanup /etc/volumerize/remove-older-than /etc/volumerize/cleanCacheLocks \
+      /etc/volumerize/prepoststrategy /etc/volumerize/list && \
     # Install Jobber
     export JOBBER_HOME=/tmp/jobber && \
     export JOBBER_LIB=$JOBBER_HOME/lib && \
