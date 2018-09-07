@@ -15,6 +15,8 @@ set -o errexit
 
 sh ${VOLUMERIZE_SCRIPT_DIR}/cleanCacheLocks
 
+${VOLUMERIZE_SCRIPT_DIR}/prepoststrategy preAction backup
+
 if [ "${VOLUMERIZE_MYSQL_BACKUPS}" = 'true' ]; then
   mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u ${VOLUMERIZE_MYSQL_USER} -h ${VOLUMERIZE_MYSQL_HOST} -p${VOLUMERIZE_MYSQL_PASSWORD} --all-databases | gzip -9 > ${VOLUMERIZE_SOURCE}/mysql/db_\$(date +"%H:%M_%d-%m-%Y").sql.gz
 fi
@@ -24,6 +26,9 @@ ${DUPLICITY_COMMAND} ${JOBBER_PARAMETER_PROXY} ${DUPLICITY_MODE} ${DUPLICITY_OPT
 source ${VOLUMERIZE_SCRIPT_DIR}/startContainers
 
 rm -rf ${VOLUMERIZE_SOURCE}/mysql/db_*
+
+${VOLUMERIZE_SCRIPT_DIR}/prepoststrategy postAction backup
+
 _EOF_
 
 JOBBER_CRON_SCHEDULE='0 0 4 * * *'
